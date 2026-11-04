@@ -1,0 +1,38 @@
+name: build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows MSVC (CMake)
+            os: windows-latest
+          - name: Linux GCC (CMake)
+            os: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        shell: bash {0}
+        run: |
+          cmake --build build --config Release --parallel > build.log 2>&1
+          status=$?
+          cat build.log
+          grep -E "error|warning C[0-9]+|warning:" build.log | sort -u | head -50 | while IFS= read -r line; do
+            echo "::warning::${line}"
+          done
+          exit $status
+
+      - name: Tests
+        run: ctest --test-dir build -C Release --output-on-failure

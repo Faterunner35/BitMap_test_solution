@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.VC.db
+*.VC.opendb
+ipch/
+x64/
+x86/
+Debug/
+Release/
+
+# CMake
+build/
+out/
+
+# Файлы, которые создаёт программа
+gradient.bmp
+sample_in_gradient_colours.bmp
+test_*.bmp
