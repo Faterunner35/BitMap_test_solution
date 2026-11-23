@@ -1,5 +1,5 @@
 // Тесты чтения/записи BMP и поиска ближайшего цвета.
-// Запуск из корня репозитория (нужны sample_1280x853.bmp и obraz-A.jpg).
+// Запуск из папки с sample_1280x853.bmp и obraz-A.jpg: ctest запускает тест в копии data/ внутри папки сборки.
 
 #include "Image.h"
 #include "NearestColour.h"
